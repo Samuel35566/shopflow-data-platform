@@ -34,3 +34,6 @@ clean: ## Supprime les données générées (sources/ et lake/)
 
 load-db: ## Copie les commandes de shop.db dans PostgreSQL
 	$(PY) ingestion/charger_postgres.py
+
+extract-orders: ## Extrait les nouvelles commandes de PostgreSQL vers lake/raw/
+	$(PY) ingestion/extraire_commandes.py
