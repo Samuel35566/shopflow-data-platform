@@ -31,3 +31,6 @@ lint: ## Vérifie le style et les erreurs du code Python
 
 clean: ## Supprime les données générées (sources/ et lake/)
 	rm -rf sources lake
+
+load-db: ## Copie les commandes de shop.db dans PostgreSQL
+	$(PY) ingestion/charger_postgres.py

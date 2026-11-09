@@ -2,3 +2,6 @@
 # Phase 0 : outils de qualité de code
 pytest
 ruff
+# Phase 1 : ingestion
+psycopg[binary]   # pilote PostgreSQL pour Python
+python-dotenv     # lit le fichier .env
