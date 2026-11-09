@@ -1,0 +1,4 @@
+# Dépendances Python du projet. Tu en ajouteras à chaque phase.
+# Phase 0 : outils de qualité de code
+pytest
+ruff

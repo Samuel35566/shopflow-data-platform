@@ -1,0 +1,37 @@
+# --- Python ---
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# --- Données : jamais dans Git, on les régénère avec `make data` ---
+sources/
+lake/
+*.parquet
+*.db
+*.csv
+!dbt_shopflow/seeds/*.csv
+
+# --- Secrets : jamais dans Git ---
+.env
+*.pem
+*-key.json
+credentials*.json
+
+# --- dbt ---
+dbt_shopflow/target/
+dbt_shopflow/dbt_packages/
+dbt_shopflow/logs/
+
+# --- Terraform ---
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+
+# --- Éditeurs et système ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

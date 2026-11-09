@@ -1,0 +1,10 @@
+# Configuration des outils Python du projet
+[tool.ruff]
+line-length = 120
+extend-exclude = ["generer_donnees.py"]   # le générateur fourni n'est pas ton code
+[tool.ruff.lint]
+# E/W : style, F : erreurs (variables inutilisées, imports manquants), I : ordre des imports
+select = ["E", "W", "F", "I"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
