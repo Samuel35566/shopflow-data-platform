@@ -37,3 +37,7 @@ load-db: ## Copie les commandes de shop.db dans PostgreSQL
 
 extract-orders: ## Extrait les nouvelles commandes de PostgreSQL vers lake/raw/
 	$(PY) ingestion/extraire_commandes.py
+
+
+extract-clients: ## Extrait le CSV des clients vers lake/raw/
+	$(PY) ingestion/extraire_clients.py
