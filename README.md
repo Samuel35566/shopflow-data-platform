@@ -7,7 +7,7 @@ qualité, cloud, sécurité, CI/CD).
 ## Démarrage rapide
 
 ```bash
-git clone https://github.com/<ton-compte>/shopflow-data-platform.git
+git clone git@github.com:Samuel35566/shopflow-data-platform.git
 cd shopflow-data-platform
 make install      # crée .venv/ et installe les dépendances
 make data         # génère les 6 sources de données dans sources/
