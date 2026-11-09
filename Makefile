@@ -41,3 +41,6 @@ extract-orders: ## Extrait les nouvelles commandes de PostgreSQL vers lake/raw/
 
 extract-clients: ## Extrait le CSV des clients vers lake/raw/
 	$(PY) ingestion/extraire_clients.py
+
+extract-payments: ## Extrait les nouveaux fichiers de paiements vers lake/raw/
+	$(PY) ingestion/extraire_paiements.py
