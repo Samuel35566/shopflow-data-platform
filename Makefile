@@ -44,3 +44,6 @@ extract-clients: ## Extrait le CSV des clients vers lake/raw/
 
 extract-payments: ## Extrait les nouveaux fichiers de paiements vers lake/raw/
 	$(PY) ingestion/extraire_paiements.py
+
+extract-logs: ## Extrait les nouveaux fichiers de logs web vers lake/raw/
+	$(PY) ingestion/extraire_logs.py
