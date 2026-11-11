@@ -47,3 +47,6 @@ extract-payments: ## Extrait les nouveaux fichiers de paiements vers lake/raw/
 
 extract-logs: ## Extrait les nouveaux fichiers de logs web vers lake/raw/
 	$(PY) ingestion/extraire_logs.py
+
+ingest: ## Collecte TOUTES les sources vers lake/raw/
+	$(PY) ingestion/tout_extraire.py
