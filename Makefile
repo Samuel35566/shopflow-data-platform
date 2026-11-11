@@ -68,3 +68,6 @@ silver-products: ## Construit la zone silver des produits (Delta)
 
 silver-clients: ## Construit la zone silver des clients (Delta)
 	$(PY) spark_jobs/silver_clients.py
+
+silver-payments: ## Construit la zone silver des paiements (après silver-orders)
+	$(PY) spark_jobs/silver_paiements.py
