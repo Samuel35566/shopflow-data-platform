@@ -13,11 +13,12 @@ def creer_session(nom: str) -> SparkSession:
     """Démarre Spark en local, avec Delta Lake activé."""
     builder = (
         SparkSession.builder.appName(nom)
-        .master("local[*]")  # en local, en utilisant tous les cœurs du processeur
+        .master("local[4]")  # en local, sur 4 cœurs (suffisant pour nos volumes)
         .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
         .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
         .config("spark.sql.session.timeZone", "UTC")  # toutes les dates en UTC
         .config("spark.driver.memory", "2g")  # mémoire maximale donnée à Spark
+        .config("spark.sql.shuffle.partitions", "8")  # 8 morceaux au lieu de 200 par défaut
     )
     # Ajoute automatiquement les fichiers Java de Delta Lake (téléchargés au 1er lancement)
     spark = configure_spark_with_delta_pip(builder).getOrCreate()

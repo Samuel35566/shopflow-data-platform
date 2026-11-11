@@ -62,3 +62,9 @@ explore: ## Explore le data lake avec Spark (lecture seule)
 
 silver-orders: ## Construit la zone silver des commandes (Delta)
 	$(PY) spark_jobs/silver_commandes.py
+
+silver-products: ## Construit la zone silver des produits (Delta)
+	$(PY) spark_jobs/silver_produits.py
+
+silver-clients: ## Construit la zone silver des clients (Delta)
+	$(PY) spark_jobs/silver_clients.py
