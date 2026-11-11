@@ -77,3 +77,5 @@ silver-logs: ## Construit la zone silver des logs web (Delta)
 
 delta-demo: ## Démonstration Delta Lake : MERGE et voyage dans le temps
 	$(PY) spark_jobs/delta_demo.py
+
+silver: silver-orders silver-products silver-clients silver-payments silver-logs ## Construit TOUTE la zone silver
