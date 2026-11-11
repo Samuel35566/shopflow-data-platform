@@ -53,3 +53,29 @@ ingest: ## Collecte TOUTES les sources vers lake/raw/
 
 extract-products: ## Récupère le catalogue produits depuis l API
 	$(PY) ingestion/extraire_produits.py
+
+spark-test: ## Vérifie que Spark et Delta Lake fonctionnent
+	$(PY) spark_jobs/test_spark.py
+
+explore: ## Explore le data lake avec Spark (lecture seule)
+	$(PY) spark_jobs/explorer_lac.py
+
+silver-orders: ## Construit la zone silver des commandes (Delta)
+	$(PY) spark_jobs/silver_commandes.py
+
+silver-products: ## Construit la zone silver des produits (Delta)
+	$(PY) spark_jobs/silver_produits.py
+
+silver-clients: ## Construit la zone silver des clients (Delta)
+	$(PY) spark_jobs/silver_clients.py
+
+silver-payments: ## Construit la zone silver des paiements (après silver-orders)
+	$(PY) spark_jobs/silver_paiements.py
+
+silver-logs: ## Construit la zone silver des logs web (Delta)
+	$(PY) spark_jobs/silver_logs.py
+
+delta-demo: ## Démonstration Delta Lake : MERGE et voyage dans le temps
+	$(PY) spark_jobs/delta_demo.py
+
+silver: silver-orders silver-products silver-clients silver-payments silver-logs ## Construit TOUTE la zone silver
