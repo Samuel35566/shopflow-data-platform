@@ -59,3 +59,6 @@ spark-test: ## Vérifie que Spark et Delta Lake fonctionnent
 
 explore: ## Explore le data lake avec Spark (lecture seule)
 	$(PY) spark_jobs/explorer_lac.py
+
+silver-orders: ## Construit la zone silver des commandes (Delta)
+	$(PY) spark_jobs/silver_commandes.py
