@@ -74,3 +74,6 @@ silver-payments: ## Construit la zone silver des paiements (après silver-orders
 
 silver-logs: ## Construit la zone silver des logs web (Delta)
 	$(PY) spark_jobs/silver_logs.py
+
+delta-demo: ## Démonstration Delta Lake : MERGE et voyage dans le temps
+	$(PY) spark_jobs/delta_demo.py
