@@ -2,3 +2,8 @@
 # Phase 0 : outils de qualité de code
 pytest
 ruff
+# Phase 1 : ingestion
+psycopg[binary]   # pilote PostgreSQL pour Python
+python-dotenv     # lit le fichier .env
+pyarrow           # écrit et lit les fichiers Parquet
+requests          # appelle des API web (HTTP)

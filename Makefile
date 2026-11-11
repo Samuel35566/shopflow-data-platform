@@ -31,3 +31,22 @@ lint: ## Vérifie le style et les erreurs du code Python
 
 clean: ## Supprime les données générées (sources/ et lake/)
 	rm -rf sources lake
+
+load-db: ## Copie les commandes de shop.db dans PostgreSQL
+	$(PY) ingestion/charger_postgres.py
+
+extract-orders: ## Extrait les nouvelles commandes de PostgreSQL vers lake/raw/
+	$(PY) ingestion/extraire_commandes.py
+
+
+extract-clients: ## Extrait le CSV des clients vers lake/raw/
+	$(PY) ingestion/extraire_clients.py
+
+extract-payments: ## Extrait les nouveaux fichiers de paiements vers lake/raw/
+	$(PY) ingestion/extraire_paiements.py
+
+extract-logs: ## Extrait les nouveaux fichiers de logs web vers lake/raw/
+	$(PY) ingestion/extraire_logs.py
+
+ingest: ## Collecte TOUTES les sources vers lake/raw/
+	$(PY) ingestion/tout_extraire.py
