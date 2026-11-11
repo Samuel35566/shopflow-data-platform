@@ -1,8 +1,7 @@
 # Configuration des outils Python du projet
 [tool.ruff]
 line-length = 120
-src = [".", "ingestion"]          # là où se trouvent NOS modules (pour trier les imports)
-extend-exclude = ["generer_donnees.py"]   # le générateur fourni n'est pas ton code
+src = [".", "ingestion", "spark_jobs"]          # là où se trouvent NOS modules (pour trier les imports)extend-exclude = ["generer_donnees.py"]   # le générateur fourni n'est pas ton code
 
 [tool.ruff.lint]
 # E/W : style, F : erreurs (variables inutilisées, imports manquants), I : ordre des imports

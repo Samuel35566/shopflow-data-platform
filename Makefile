@@ -56,3 +56,6 @@ extract-products: ## Récupère le catalogue produits depuis l API
 
 spark-test: ## Vérifie que Spark et Delta Lake fonctionnent
 	$(PY) spark_jobs/test_spark.py
+
+explore: ## Explore le data lake avec Spark (lecture seule)
+	$(PY) spark_jobs/explorer_lac.py
