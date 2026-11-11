@@ -53,3 +53,6 @@ ingest: ## Collecte TOUTES les sources vers lake/raw/
 
 extract-products: ## Récupère le catalogue produits depuis l API
 	$(PY) ingestion/extraire_produits.py
+
+spark-test: ## Vérifie que Spark et Delta Lake fonctionnent
+	$(PY) spark_jobs/test_spark.py

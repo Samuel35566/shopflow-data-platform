@@ -7,3 +7,6 @@ psycopg[binary]   # pilote PostgreSQL pour Python
 python-dotenv     # lit le fichier .env
 pyarrow           # écrit et lit les fichiers Parquet
 requests          # appelle des API web (HTTP)
+# Phase 2 : traitement avec Spark
+pyspark==4.1.*      # Spark depuis Python
+delta-spark==4.3.*  # Delta Lake (compatible avec Spark 4.0 et 4.1)
