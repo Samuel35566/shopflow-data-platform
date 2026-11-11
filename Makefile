@@ -71,3 +71,6 @@ silver-clients: ## Construit la zone silver des clients (Delta)
 
 silver-payments: ## Construit la zone silver des paiements (après silver-orders)
 	$(PY) spark_jobs/silver_paiements.py
+
+silver-logs: ## Construit la zone silver des logs web (Delta)
+	$(PY) spark_jobs/silver_logs.py
