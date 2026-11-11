@@ -50,3 +50,6 @@ extract-logs: ## Extrait les nouveaux fichiers de logs web vers lake/raw/
 
 ingest: ## Collecte TOUTES les sources vers lake/raw/
 	$(PY) ingestion/tout_extraire.py
+
+extract-products: ## Récupère le catalogue produits depuis l API
+	$(PY) ingestion/extraire_produits.py
