@@ -62,6 +62,19 @@ titre("7. Créer une colonne : le statut en minuscules (withColumn)")
 titre("8. Les prix des produits : combien sont écrits en texte avec « € » ?")
 produits.groupBy(F.col("price").contains("€").alias("prix_avec_euro")).count().show()
 
+
+
+titre("Exercice 1 : commandes par devise")
+commandes.groupBy("currency").count().orderBy(F.desc("count")).show()
+
+titre("Exercice 2 : les 5 pages les plus visitées")
+logs.groupBy("url").count().orderBy(F.desc("count")).show(5)
+
+titre("Exercice 3 : commandes de l'entrepôt LYON-01")
+print(commandes.filter(F.col("warehouse") == "LYON-01").count())
+
+
+
 titre("9. Écrire du SQL directement dans Spark : robots ou humains ?")
 logs.createOrReplaceTempView("web_logs")  # rend le DataFrame interrogeable en SQL
 spark.sql("""
