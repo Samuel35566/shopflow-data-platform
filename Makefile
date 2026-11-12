@@ -78,4 +78,28 @@ silver-logs: ## Construit la zone silver des logs web (Delta)
 delta-demo: ## Démonstration Delta Lake : MERGE et voyage dans le temps
 	$(PY) spark_jobs/delta_demo.py
 
-silver: silver-orders silver-products silver-clients silver-payments silver-logs ## Construit TOUTE la zone silver
+silver: silver-orders silver-order-items silver-products silver-clients silver-payments silver-logs ## Construit TOUTE la zone silver
+
+dbt-debug: ## Vérifie que dbt trouve son projet et sa base DuckDB
+	mkdir -p lake/gold
+	cd dbt_shopflow && ../$(BIN)/dbt debug --profiles-dir .
+
+dbt-run: ## Construit les modèles dbt dans lake/gold/shopflow.duckdb
+	mkdir -p lake/gold
+	cd dbt_shopflow && ../$(BIN)/dbt run --profiles-dir .
+
+extract-order-items: ## Extrait toutes les lignes de commande de PostgreSQL vers lake/raw/
+	$(PY) ingestion/extraire_lignes_commande.py
+
+silver-order-items: ## Construit la zone silver des lignes de commande (après silver-orders)
+	$(PY) spark_jobs/silver_lignes_commande.py
+
+dbt-test: ## Lance les tests dbt
+	cd dbt_shopflow && ../$(BIN)/dbt test --profiles-dir .
+
+dbt-build: ## Construit ET teste tous les modèles dbt, dans le bon ordre
+	mkdir -p lake/gold
+	cd dbt_shopflow && ../$(BIN)/dbt build --profiles-dir .
+
+dbt-docs: ## Génère et affiche la documentation dbt sur http://localhost:8080
+	cd dbt_shopflow && ../$(BIN)/dbt docs generate --profiles-dir . && ../$(BIN)/dbt docs serve --profiles-dir . --port 8080 --no-browser

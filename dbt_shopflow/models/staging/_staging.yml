@@ -1,0 +1,79 @@
+version: 2
+
+models:
+  - name: stg_commandes
+    description: "Une ligne par commande (dernière version connue)."
+    columns:
+      - name: commande_id
+        description: "Identifiant unique de la commande."
+        data_tests:
+          - unique
+          - not_null
+      - name: client_id
+        data_tests:
+          - not_null
+      - name: statut
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["paid", "shipped", "delivered", "cancelled", "refunded"]
+
+  - name: stg_lignes_commande
+    description: "Une ligne par article d'une commande."
+    columns:
+      - name: commande_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_commandes')
+                field: commande_id
+              config:
+                severity: warn
+      - name: numero_ligne
+        data_tests:
+          - not_null
+
+  - name: stg_produits
+    description: "Le catalogue produits, un produit par ligne."
+    columns:
+      - name: produit_id
+        data_tests:
+          - unique
+          - not_null
+      - name: categorie
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["Running", "Vélo", "Randonnée", "Natation", "Fitness"]
+
+  - name: stg_clients
+    description: "Les clients du CRM."
+    columns:
+      - name: client_id
+        data_tests:
+          - unique
+          - not_null
+
+  - name: stg_paiements
+    description: "Un paiement par ligne, montant en devise et en euros."
+    columns:
+      - name: paiement_id
+        data_tests:
+          - unique
+          - not_null
+      - name: commande_id
+        data_tests:
+          - not_null
+      - name: statut
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["succeeded", "failed"]
+
+  - name: stg_visites
+    description: "Une page vue par ligne."
+    columns:
+      - name: est_robot
+        data_tests:
+          - not_null

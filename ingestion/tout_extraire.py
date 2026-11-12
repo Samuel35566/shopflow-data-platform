@@ -14,6 +14,7 @@ import extraire_commandes
 import extraire_logs
 import extraire_paiements
 import extraire_produits
+import extraire_lignes_commande
 from commun import get_logger
 
 log = get_logger("ingestion")
@@ -25,6 +26,7 @@ SOURCES = [
     ("Clients    (CSV)", extraire_clients.main),
     ("Paiements  (JSON SaaS)", extraire_paiements.main),
     ("Logs web   (texte)", extraire_logs.main),
+    ("Lignes cmd (PostgreSQL)", extraire_lignes_commande.main),
 ]
 
 

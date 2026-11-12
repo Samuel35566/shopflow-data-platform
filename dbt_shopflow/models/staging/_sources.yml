@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: silver
+    description: "Tables Delta nettoyées par Spark (phase 2 et étape 3.2)"
+    meta:
+      # {name} est remplacé par le nom de la table : orders → delta_scan('../lake/silver/orders')
+      external_location: "delta_scan('../lake/silver/{name}')"
+    tables:
+      - name: orders
+      - name: order_items
+      - name: products
+      - name: clients
+      - name: payments
+      - name: web_logs

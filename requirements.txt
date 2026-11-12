@@ -10,3 +10,5 @@ requests          # appelle des API web (HTTP)
 # Phase 2 : traitement avec Spark
 pyspark==4.1.*      # Spark depuis Python
 delta-spark==4.3.*  # Delta Lake (compatible avec Spark 4.0 et 4.1)
+# Phase 3 : modélisation (entrepôt de données)
+dbt-duckdb==1.11.*   # dbt + son adaptateur DuckDB (installe aussi dbt-core et duckdb)

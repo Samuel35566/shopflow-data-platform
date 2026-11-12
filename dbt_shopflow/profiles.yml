@@ -1,0 +1,9 @@
+shopflow:
+  target: dev                              # l'environnement par défaut
+  outputs:
+    dev:
+      type: duckdb
+      path: ../lake/gold/shopflow.duckdb   # le fichier-base de données
+      threads: 4                           # 4 modèles construits en parallèle
+      extensions:
+        - delta                            # permet à DuckDB de lire les tables Delta

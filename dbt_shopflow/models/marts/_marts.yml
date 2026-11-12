@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: dim_produit
+    description: "Un produit par ligne. produit_id = -1 : produit inconnu (hors catalogue)."
+    columns:
+      - name: produit_id
+        data_tests: [unique, not_null]
+
+  - name: dim_client
+    description: >
+      Clients historisés (SCD2) : une ligne par version. client_sk = '-1' : client inconnu.
+      Pour l'état actuel : filtrer sur est_version_actuelle.
+    columns:
+      - name: client_sk
+        data_tests: [unique, not_null]
+      - name: client_id
+        data_tests: [not_null]
+
+  - name: dim_date
+    description: "Un jour par ligne, sur les années couvertes par les commandes."
+    columns:
+      - name: date_jour
+        data_tests: [unique, not_null]
+
+  - name: dim_entrepot
+    description: "Un entrepôt par ligne. entrepot_id = 'INCONNU' : commande sans entrepôt."
+    columns:
+      - name: entrepot_id
+        data_tests: [unique, not_null]
+
+  - name: fct_ventes
+    description: >
+      Table de faits des ventes. Grain : un article d'une commande. Montants en euros.
+      Chiffre d'affaires réel = somme de montant_ligne où est_vente_valide ET est_payee.
+    columns:
+      - name: commande_id
+        data_tests: [not_null]
+      - name: montant_ligne
+        data_tests: [not_null]
+      - name: client_sk
+        data_tests:
+          - relationships:
+              arguments: {to: ref('dim_client'), field: client_sk}
+      - name: produit_id
+        data_tests:
+          - relationships:
+              arguments: {to: ref('dim_produit'), field: produit_id}
+      - name: entrepot_id
+        data_tests:
+          - relationships:
+              arguments: {to: ref('dim_entrepot'), field: entrepot_id}
+      - name: date_commande
+        data_tests:
+          - relationships:
+              arguments: {to: ref('dim_date'), field: date_jour}

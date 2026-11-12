@@ -1,0 +1,8 @@
+snapshots:
+  - name: snap_clients
+    description: "Historique des clients (SCD2) : une ligne par version d'un client."
+    relation: ref('stg_clients')        # ce qu'on photographie
+    config:
+      unique_key: client_id             # comment reconnaître « le même client »
+      strategy: check                   # comparer les valeurs des colonnes…
+      check_cols: [pays, segment, email]  # …mais seulement celles-ci
