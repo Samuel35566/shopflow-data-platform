@@ -35,3 +35,4 @@ dbt_shopflow/logs/
 .idea/
 .DS_Store
 Thumbs.db
+dbt_shopflow/.user.yml

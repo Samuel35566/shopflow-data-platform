@@ -88,16 +88,15 @@ dbt-run: ## Construit les modèles dbt dans lake/gold/shopflow.duckdb
 	mkdir -p lake/gold
 	cd dbt_shopflow && ../$(BIN)/dbt run --profiles-dir .
 
-dbt-debug: ## Vérifie que dbt trouve son projet et sa base DuckDB
-	mkdir -p lake/gold
-	cd dbt_shopflow && ../$(BIN)/dbt debug --profiles-dir .
-
-dbt-run: ## Construit les modèles dbt dans lake/gold/shopflow.duckdb
-	mkdir -p lake/gold
-	cd dbt_shopflow && ../$(BIN)/dbt run --profiles-dir .
-
 extract-order-items: ## Extrait toutes les lignes de commande de PostgreSQL vers lake/raw/
 	$(PY) ingestion/extraire_lignes_commande.py
 
 silver-order-items: ## Construit la zone silver des lignes de commande (après silver-orders)
 	$(PY) spark_jobs/silver_lignes_commande.py
+
+dbt-test: ## Lance les tests dbt
+	cd dbt_shopflow && ../$(BIN)/dbt test --profiles-dir .
+
+dbt-build: ## Construit ET teste tous les modèles dbt, dans le bon ordre
+	mkdir -p lake/gold
+	cd dbt_shopflow && ../$(BIN)/dbt build --profiles-dir .
