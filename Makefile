@@ -100,3 +100,6 @@ dbt-test: ## Lance les tests dbt
 dbt-build: ## Construit ET teste tous les modèles dbt, dans le bon ordre
 	mkdir -p lake/gold
 	cd dbt_shopflow && ../$(BIN)/dbt build --profiles-dir .
+
+dbt-docs: ## Génère et affiche la documentation dbt sur http://localhost:8080
+	cd dbt_shopflow && ../$(BIN)/dbt docs generate --profiles-dir . && ../$(BIN)/dbt docs serve --profiles-dir . --port 8080 --no-browser

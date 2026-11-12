@@ -6,6 +6,7 @@ model-paths: ["models"]   # où sont les fichiers .sql
 seed-paths: ["seeds"]     # petits CSV de référence
 test-paths: ["tests"]
 macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
 clean-targets: ["target", "dbt_packages"]
 
 models:
@@ -13,4 +14,6 @@ models:
     staging:
       +materialized: view   # staging : des VUES (aucune copie, toujours à jour)
     marts:
-      +materialized: table  # marts : de vraies TABLES (rapides à interroger)
+      +materialized: table  # marts : le schéma en étoile, de vraies TABLES
+    rapports:
+      +materialized: table  # rapports : les réponses aux questions métier
