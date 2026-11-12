@@ -1,9 +1,9 @@
 name: shopflow            # nom du projet
 version: "1.0.0"
-profile: shopflow         # quel « profil » de connexion utiliser (fichier 2)
+profile: shopflow         # quel « profil » de connexion utiliser (profiles.yml)
 
 model-paths: ["models"]   # où sont les fichiers .sql
-seed-paths: ["seeds"]     # petits CSV de référence (plus tard)
+seed-paths: ["seeds"]     # petits CSV de référence
 test-paths: ["tests"]
 macro-paths: ["macros"]
 clean-targets: ["target", "dbt_packages"]
@@ -11,4 +11,6 @@ clean-targets: ["target", "dbt_packages"]
 models:
   shopflow:
     staging:
-      +materialized: view  # les modèles staging sont des VUES (voir plus bas)
+      +materialized: view   # staging : des VUES (aucune copie, toujours à jour)
+    marts:
+      +materialized: table  # marts : de vraies TABLES (rapides à interroger)

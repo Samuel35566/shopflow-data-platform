@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: dim_produit
+    description: "Un produit par ligne. produit_id = -1 : produit inconnu (hors catalogue)."
+    columns:
+      - name: produit_id
+        data_tests: [unique, not_null]
+
+  - name: dim_client
+    description: "Un client par ligne. client_id = -1 : client inconnu (absent du CRM)."
+    columns:
+      - name: client_id
+        data_tests: [unique, not_null]
+
+  - name: dim_date
+    description: "Un jour par ligne, sur les années couvertes par les commandes."
+    columns:
+      - name: date_jour
+        data_tests: [unique, not_null]
+
+  - name: dim_entrepot
+    description: "Un entrepôt par ligne. entrepot_id = 'INCONNU' : commande sans entrepôt."
+    columns:
+      - name: entrepot_id
+        data_tests: [unique, not_null]
