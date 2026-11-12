@@ -2,8 +2,8 @@
 -- GRAIN : une ligne = un article d'une commande. Les montants sont en euros.
 -- Choix métier :
 --   * les lignes des commandes en QUARANTAINE sont exclues (inner join avec stg_commandes) ;
---   * les commandes annulées / remboursées / non payées sont GARDÉES mais SIGNALÉES :
---     chaque indicateur décide s'il les compte (colonnes est_vente_valide et est_payee).
+--   * les commandes annulées / remboursées / non payées sont GARDÉES mais SIGNALÉES ;
+--   * le client est rattaché à la VERSION valable au moment de la commande (SCD2).
 
 with lignes as (
     select * from {{ ref('stg_lignes_commande') }}
@@ -13,8 +13,7 @@ commandes as (
     select * from {{ ref('stg_commandes') }}
 ),
 
--- UNE ligne par commande payée. Le « distinct » est vital : si une commande avait
--- deux paiements réussis, la jointure doublerait ses lignes de vente (et son montant !).
+-- UNE ligne par commande payée (le distinct évite de dupliquer les ventes)
 paiements_reussis as (
     select distinct commande_id
     from {{ ref('stg_paiements') }}
@@ -22,7 +21,7 @@ paiements_reussis as (
 ),
 
 produits  as (select produit_id  from {{ ref('dim_produit') }}),
-clients   as (select client_id   from {{ ref('dim_client') }}),
+clients   as (select client_sk, client_id, valide_du, valide_au from {{ ref('dim_client') }}),
 entrepots as (select entrepot_id from {{ ref('dim_entrepot') }})
 
 select
@@ -32,10 +31,11 @@ select
 
     -- clés vers les dimensions (membre « inconnu » si la valeur n'y est pas)
     c.date_commande,
+    coalesce(cl.client_sk, '-1')        as client_sk,
     coalesce(cl.client_id, -1)          as client_id,
     coalesce(p.produit_id, -1)          as produit_id,
     coalesce(e.entrepot_id, 'INCONNU')  as entrepot_id,
-    l.produit_id                        as produit_id_source,   -- l'identifiant d'origine, pour enquêter
+    l.produit_id                        as produit_id_source,
 
     -- indicateurs
     c.statut                                     as statut_commande,
@@ -49,8 +49,11 @@ select
     l.montant_ligne
 
 from lignes l
-inner join commandes c           on l.commande_id = c.commande_id   -- exclut les commandes en quarantaine
-left join  clients cl            on c.client_id   = cl.client_id
+inner join commandes c           on l.commande_id = c.commande_id
+-- SCD2 : le bon client ET la version valable à la date de la commande
+left join  clients cl            on  c.client_id   = cl.client_id
+                                 and c.commande_le >= cl.valide_du
+                                 and c.commande_le <  cl.valide_au
 left join  produits p            on l.produit_id  = p.produit_id
 left join  entrepots e           on c.entrepot    = e.entrepot_id
 left join  paiements_reussis pr  on l.commande_id = pr.commande_id

@@ -8,10 +8,14 @@ models:
         data_tests: [unique, not_null]
 
   - name: dim_client
-    description: "Un client par ligne. client_id = -1 : client inconnu (absent du CRM)."
+    description: >
+      Clients historisés (SCD2) : une ligne par version. client_sk = '-1' : client inconnu.
+      Pour l'état actuel : filtrer sur est_version_actuelle.
     columns:
-      - name: client_id
+      - name: client_sk
         data_tests: [unique, not_null]
+      - name: client_id
+        data_tests: [not_null]
 
   - name: dim_date
     description: "Un jour par ligne, sur les années couvertes par les commandes."
@@ -34,10 +38,10 @@ models:
         data_tests: [not_null]
       - name: montant_ligne
         data_tests: [not_null]
-      - name: client_id
+      - name: client_sk
         data_tests:
           - relationships:
-              arguments: {to: ref('dim_client'), field: client_id}
+              arguments: {to: ref('dim_client'), field: client_sk}
       - name: produit_id
         data_tests:
           - relationships:
